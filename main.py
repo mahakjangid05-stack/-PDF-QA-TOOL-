@@ -1,19 +1,14 @@
+﻿from fastapi import FastAPI
+from dotenv import load_dotenv
 
-from fastapi import FastAPI
+load_dotenv()
+
 app = FastAPI()
 
-response = {
-    "hello": "yes i am you chatbot name is mayank",
-    "kya hai": "mai tera chatbot hu",
-    "name": "tu beta apna name bata"
-}
+@app.get("/")
+def root():
+    return {"message": "PDF QA Tool Running"}
 
-@app.post("/chat/")
-def chat(message: str):
-    user_message = message.lower()
-    if user_message in response:
-        reply = response[user_message]  # ✅ FIX
-    else:
-        reply = "muje nhi pata"
-    return {"reply": reply}  # ✅ FIX
-
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000)
